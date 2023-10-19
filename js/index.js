@@ -7,6 +7,55 @@ let directionsRenderer;
 let infowindow;
 const mapContainer = document.querySelector('.map');
 const searchInput = document.querySelector('.search_input');
+const btn = document.querySelector('.btn');
+const restaurantList = document.querySelector('.restaurant_list');
+const deleteBtn = document.querySelector('.delete_btn');
+
+// restaurantList init
+const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
+restaurantListData.forEach((restaurant) => {
+    restaurantList.innerHTML += `
+        <li onclick="handleDelete(this)">
+        ${restaurant.name}
+        <button class="delete_btn btn"></button>
+        </li>
+    `;
+})
+
+// 加入餐廳到最愛
+btn.addEventListener('click',() => {
+    restaurantList.innerHTML += `
+        <li onclick="handleDelete(this)">
+        ${selectedRestaurant.name}
+        <button class="delete_btn btn"></button>
+        </li>
+    `
+    // 加到最愛後清空輸入欄
+    searchInput.value = '';
+
+    const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
+    restaurantListData.push(selectedRestaurant);
+    localStorage.setItem('restaurantListData',JSON.stringify(restaurantListData));
+})
+// 刪除選定的餐廳
+const handleDelete = (e) => {
+        console.log(e);
+        // dev
+        if(e.classList.contains('delete_btn')){
+            e.parentNode.remove();
+        }
+        const restaurantName = e.innerText.trim();
+        const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
+        const newRestaurantListData = restaurantListData.filter((restaurant) => {
+            if(restaurant.name === restaurantName){
+                return false;
+            }else{
+                return true;
+            }
+        })
+        console.log(newRestaurantListData);
+        localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
+}
 
 
 function initMap(){
