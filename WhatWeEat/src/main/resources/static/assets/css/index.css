@@ -1,0 +1,10 @@
+.container{
+    display: flex;
+}
+.map{
+    width: 50%;
+    height: 50vh;
+}
+.search_input{
+    margin: 0 0 0 16px;
+}
