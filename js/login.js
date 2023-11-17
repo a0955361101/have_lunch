@@ -3,6 +3,7 @@ const userPasswordLabel = document.querySelector('.user_password_label');
 const nameLabel = document.querySelector('.name_label');
 const userNameInput = document.querySelector('.username_input');
 const userPasswordInput = document.querySelector('.user_password_input');
+const nameInput = document.querySelector('.name_input');
 const registerBtn = document.querySelector('.register_btn');
 const loginBtn = document.querySelector('.login_btn');
 const nameBox = document.querySelector('.name');
@@ -51,7 +52,7 @@ const blurUserInput = (value) => {
         userPasswordLabel.style.fontSize = '16px';
         userPasswordLabel.style.color = '#fff';
     }
-    else if(value === 'name'){
+    else if(value === 'name' && nameInput.value === ''){
         nameLabel.style.top = '25%';
         nameLabel.style.fontSize = '16px';
         nameLabel.style.color = '#fff';
