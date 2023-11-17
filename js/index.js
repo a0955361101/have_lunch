@@ -250,3 +250,11 @@ document.querySelector('.draw').addEventListener('click',() => {
     document.getElementById('canvas').style.display = 'block';
     wheel.startAnimation();
 })
+
+
+// 跳轉登入頁
+const jumpLoginPage = () => {
+    const url = window.location.origin;
+    window.location.href = url + '/pages/login.html';
+    // console.log(url);
+}

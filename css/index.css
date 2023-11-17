@@ -1,5 +1,6 @@
 .container{
     display: flex;
+    padding: 0 10%;
 }
 .map{
     width: 50%;
@@ -33,4 +34,18 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
+}
+
+.header{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #888;
+}
+
+.navbar{
+    padding: 0 10%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
