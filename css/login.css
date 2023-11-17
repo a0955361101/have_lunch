@@ -18,7 +18,7 @@ body{
     top: calc(50% - 155px);
     left: calc(50% - 190px);
     width: 300px;
-    height: 310px;
+    min-height: 310px;
     background-color: rgba(0,0,0,.5);
     padding: 0 2.5rem;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
@@ -33,7 +33,7 @@ h3{
     margin: 28px 0;
 }
 
-.user_password,.user_name{
+.user_password,.user_name,.name{
     position: relative;
     margin-bottom:1.75rem;
     width: 304px;
@@ -62,10 +62,20 @@ label{
     transition: all 0.5s ease 0s;
 }
 
-.submit_btn{
+.submit_btn,.register_btn{
     width: 128px;
     height: 40px;
     margin: 48px 0;
+}
+
+.register_btn a{
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    color:rgb(97 218 251 / 1);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
 }
 
 .submit_btn a{
@@ -78,6 +88,13 @@ label{
     overflow: hidden;
 }
 
+.register_btn a:hover{
+    background-color:rgb(97 218 251 / 1);
+    box-shadow: 0 0 5px rgb(97 218 251 / 1),0 0 25px rgb(97 218 251 / 1),0 0 50px rgb(97 218 251 / 1),0 0 100px rgb(97 218 251 / 1);
+    color: #fff; 
+    border-radius: 5px;
+}
+
 .submit_btn a:hover{
     background-color:rgb(66 184 131 / 1);
     box-shadow: 0 0 5px #42b883,0 0 25px #42b883,0 0 50px #42b883,0 0 100px #42b883;
@@ -85,19 +102,52 @@ label{
     border-radius: 5px;
 }
 
+
+
+.register_btn .boder_1{
+    background: linear-gradient(90deg, transparent, rgb(97 218 251));
+}
+
+.register_btn .boder_2{
+    background: linear-gradient(90deg, transparent, rgb(97 218 251));
+}
+
+.register_btn .boder_3{
+    background: linear-gradient(90deg, transparent, rgb(97 218 251));
+}
+
+.register_btn .boder_4{
+    background: linear-gradient(90deg, transparent, rgb(97 218 251));
+}
+
+.submit_btn .boder_2{
+    background: linear-gradient(transparent, rgb(66, 184, 131));
+}
+
+.submit_btn .boder_2{
+    background: linear-gradient(transparent, rgb(66, 184, 131));
+}
+
+.submit_btn .boder_3{
+    background: linear-gradient(270deg, transparent, rgb(66, 184, 131));
+}
+
+.submit_btn .boder_4{
+    background: linear-gradient(360deg, transparent, rgb(66, 184, 131));
+}
+
 .boder_1{
     position: absolute;
     display: block;
     right: 0;
-    background: linear-gradient(90deg, transparent, rgb(66, 184, 131));
     animation:boder1 1s linear infinite;
     height: 2px;
     width: 100%;
 }
 
+
 .boder_2{
     position: absolute;
-    background: linear-gradient(transparent, rgb(66, 184, 131));
     animation:boder2 1s linear infinite;
     animation-delay:0.25s;
     height: 100%;
@@ -107,9 +157,9 @@ label{
     display: block;
 }
 
+
 .boder_3{
     display: block;
-    background: linear-gradient(270deg, transparent, rgb(66, 184, 131));
     animation:boder3 1s linear infinite;
     animation-delay:0.5s;
     width: 100%;
@@ -119,9 +169,10 @@ label{
     position: absolute;
 }
 
+
+
 .boder_4{
     display: block;
-    background: linear-gradient(360deg, transparent, rgb(66, 184, 131));
     animation:boder4 1s linear infinite;
     animation-delay:0.75s;
     width: 2px;
@@ -129,6 +180,13 @@ label{
     left: 0;
     bottom: 0;
     position: absolute;
+}
+
+
+
+.btn_wrap{
+    display: flex;
+    justify-content: space-between;
 }
 
 @keyframes boder1 {

@@ -10,7 +10,7 @@
 <body>
     <div class="login_bg">
         <div class="login_box">
-            <h3>Login</h3>
+            <h3 class="title"></h3>
             <div class="user_name">
                 <input class="username_input" type="text" name="Username" onfocus="focusUserInput('userName')" onblur="blurUserInput('userName')"></input>
                 <label class="user_name_label">Username</label>
@@ -19,14 +19,38 @@
                 <input class="user_password_input" type="Password" name="Password" onfocus="focusUserInput('userPassword')" onblur="blurUserInput('userPassword')"></input>
                 <label class="user_password_label">Password</label>
             </div>
-            <div class="submit_btn">
-                <a href="##">
-                    <span class="boder_1"></span>
-                    <span class="boder_2"></span>
-                    <span class="boder_3"></span>
-                    <span class="boder_4"></span>
-                    Submit
-                </a>
+            <div class="name">
+                <input class="name_input" type="text" name="name" onfocus="focusUserInput('name')" onblur="blurUserInput('name')"></input>
+                <label class="name_label">Name</label>
+            </div>
+            <div class="btn_wrap">
+                <div class="submit_btn">
+                    <a href="##">
+                        <span class="boder_1"></span>
+                        <span class="boder_2"></span>
+                        <span class="boder_3"></span>
+                        <span class="boder_4"></span>
+                        Submit
+                    </a>
+                </div>
+                <div class="register_btn" onclick="changeRegister(1)">
+                    <a href="##">
+                        <span class="boder_1"></span>
+                        <span class="boder_2"></span>
+                        <span class="boder_3"></span>
+                        <span class="boder_4"></span>
+                        Register
+                    </a>
+                </div>
+                <div class="login_btn register_btn" onclick="changeRegister(0)">
+                    <a href="##">
+                        <span class="boder_1"></span>
+                        <span class="boder_2"></span>
+                        <span class="boder_3"></span>
+                        <span class="boder_4"></span>
+                        Login
+                    </a>
+                </div>
             </div>
         </div>
     </div>
