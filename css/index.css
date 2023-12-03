@@ -40,7 +40,8 @@
     height: 50px;
     display: flex;
     align-items: center;
-    background-color: #888;
+    background: linear-gradient(rgb(20, 30, 48), rgb(36, 59, 85)) no-repeat;
+    color: #fff;
 }
 
 .navbar{
