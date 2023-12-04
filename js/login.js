@@ -66,12 +66,24 @@ const changeRegister = (number) => {
         loginBtn.style.display = 'block';
         nameBox.style.display = 'block';
         pageTitle = 'Register';
+        userNameInput.value = '';
+        userPasswordInput .value = '';
+        nameInput.value = '';
+        blurUserInput('userName');
+        blurUserInput('userPassword');
+        blurUserInput('name');
     }
     else if(page === 0){
         loginBtn.style.display = 'none';
         registerBtn.style.display = 'block';
         nameBox.style.display = 'none';
         pageTitle = 'Login';
+        userNameInput.value = '';
+        userPasswordInput .value = '';
+        nameInput.value = '';
+        blurUserInput('userName');
+        blurUserInput('userPassword');
+        blurUserInput('name');
     }
     title.innerHTML = pageTitle;
 }
