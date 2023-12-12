@@ -98,7 +98,13 @@ const handleUser = async () => {
         password:userPasswordInput .value,
         name:nameInput.value,
     }
-    await axios.post(registerApi, data, {});
+    await axios.post(registerApi, data, {})
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
     userNameInput.value = '';
     userPasswordInput .value = '';
     nameInput.value = '';
