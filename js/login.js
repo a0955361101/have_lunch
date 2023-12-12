@@ -87,3 +87,19 @@ const changeRegister = (number) => {
     }
     title.innerHTML = pageTitle;
 }
+
+const SERVER = 'http://localhost:8080';
+const registerApi = `${SERVER}/signup`;
+
+
+const handleUser = async () => {
+    const data = {
+        username:userNameInput.value,
+        password:userPasswordInput .value,
+        name:nameInput.value,
+    }
+    await axios.post(registerApi, data, {});
+    userNameInput.value = '';
+    userPasswordInput .value = '';
+    nameInput.value = '';
+}
