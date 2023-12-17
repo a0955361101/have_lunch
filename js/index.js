@@ -8,10 +8,11 @@ let infoWindow;
 const mapContainer = document.querySelector('.map');
 const searchInput = document.querySelector('.search_input');
 const btn = document.querySelector('.btn');
+const addBtn = document.querySelector('.addBtn');
 const deleteBtn = document.querySelector('.delete_btn');
 const restaurantList = document.querySelector('.restaurant_list');
-
-const colors = ['#faa','#eee','#49c','#cc6'];
+const alertBox = document.querySelector('.alert_box');
+const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)'];
 
 
 
@@ -19,19 +20,23 @@ const colors = ['#faa','#eee','#49c','#cc6'];
 const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
 restaurantListData.forEach((restaurant) => {
     restaurantList.innerHTML += `
-        <li onclick="handleDelete(this)">
-            ${restaurant.name}
-            <button class="delete_btn btn"></button>
+        <li onclick="handleDelete(this)" class="delete_li">
+        <span class="add_bottomline">店名: ${restaurant.name}</span><span class="add_bottomline">地址: ${restaurant.address}</span>
+            <div class="delete_btn">
+                <img class="delete_img" src="/images/delete.png" alt="">
+            </div>
         </li>
     `;
 })
 
 // 加入餐廳到最愛
-btn.addEventListener('click',() => {
+addBtn.addEventListener('click',() => {
     restaurantList.innerHTML += `
-        <li onclick="handleDelete(this)">
-            ${selectedRestaurant.name}
-            <button class="delete_btn btn"></button>
+        <li onclick="handleDelete(this)" class="delete_li">
+        <span class="add_bottomline">店名: ${selectedRestaurant.name}</span><span class="add_bottomline">地址: ${selectedRestaurant.address}</span>
+            <div class="delete_btn">
+                <img class="delete_img" src="/images/delete.png" alt="">
+            </div>
         </li>
     `
     // 加到最愛後清空輸入欄
@@ -50,11 +55,12 @@ btn.addEventListener('click',() => {
 })
 // 刪除選定的餐廳
 const handleDelete = (e) => {
-        // console.log(e);
-        if(e.children[0].classList.contains('delete_btn')){
+        if(e.children[0].classList.contains('add_bottomline')){
             e.remove();
         }
         const restaurantName = e.innerText.trim();
+        console.log(restaurantName);
+
         const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
         const index = restaurantListData.findIndex((restaurant) => {
             return restaurant.name === restaurantName;
@@ -62,13 +68,12 @@ const handleDelete = (e) => {
         wheel.deleteSegment(index + 1);
         wheel.draw();
         const newRestaurantListData = restaurantListData.filter((restaurant) => {
-            if(restaurant.name === restaurantName){
+            if("店名: "+restaurant.name+"地址: "+ restaurant.address === restaurantName){
                 return false;
             }else{
                 return true;
             }
         })
-        // console.log(newRestaurantListData);
         localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
 }
 
@@ -186,7 +191,15 @@ const wheel = new Winwheel({
             document.getElementById('canvas').style.display = 'none';
             wheel.rotationAngle = 0;
             wheel.draw();
-            window.alert(segment.text)
+            // window.alert(segment.text);
+            alertBox.style.display = 'flex';
+            alertBox.innerHTML = `
+            <div class="tips">溫馨提示</div>
+            <div class="alert_txt">
+                ${segment.text}
+            </div>
+            <div class="alert_box_btn" onclick="closeAlert()">確定</div>
+            `;
             const restaurantList = JSON.parse(localStorage.getItem('restaurantListData')) || []
             selectedRestaurant = restaurantList.find((restaurant) => {
                 return restaurant.name === segment.text
@@ -246,8 +259,9 @@ const wheel = new Winwheel({
 })
 
 document.querySelector('.draw').addEventListener('click',() => {
+    const canvas = document.getElementById('canvas');
     document.querySelector('.wheel').style.display = 'block';
-    document.getElementById('canvas').style.display = 'block';
+    canvas.style.display = 'block';
     wheel.startAnimation();
 })
 
@@ -257,4 +271,9 @@ const jumpLoginPage = () => {
     const url = window.location.origin;
     window.location.href = url + '/pages/login.html';
     // console.log(url);
+}
+
+// 關閉 Alert
+const closeAlert = () => {
+    alertBox.style.display = 'none';
 }
