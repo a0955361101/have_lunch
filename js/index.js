@@ -19,25 +19,33 @@ const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','rgb(66 184 131 / 1)
 // restaurantList init
 const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
 restaurantListData.forEach((restaurant) => {
-    restaurantList.innerHTML += `
+    restaurantList.innerHTML +=
+    `
         <li onclick="handleDelete(this)" class="delete_li">
-        <span class="add_bottomline">店名: ${restaurant.name}</span><span class="add_bottomline">地址: ${restaurant.address}</span>
+            <span style="font-size: 14px;">店名: </span> 
+            <span class="add_bottomline">${restaurant.name}</span>
+            <span style="font-size: 14px;">地址: </span>
+            <span class="add_bottomline">${restaurant.address}</span>
             <div class="delete_btn">
                 <img class="delete_img" src="/images/delete.png" alt="">
             </div>
         </li>
-    `;
+    `
 })
 
 // 加入餐廳到最愛
 addBtn.addEventListener('click',() => {
-    restaurantList.innerHTML += `
-        <li onclick="handleDelete(this)" class="delete_li">
-        <span class="add_bottomline">店名: ${selectedRestaurant.name}</span><span class="add_bottomline">地址: ${selectedRestaurant.address}</span>
-            <div class="delete_btn">
-                <img class="delete_img" src="/images/delete.png" alt="">
-            </div>
-        </li>
+    restaurantList.innerHTML += 
+    `
+    <li onclick="handleDelete(this)" class="delete_li">
+        <span style="font-size: 14px;">店名: </span> 
+        <span class="add_bottomline">${selectedRestaurant.name}</span>
+        <span style="font-size: 14px;">地址: </span>
+        <span class="add_bottomline">${selectedRestaurant.address}</span>
+        <div class="delete_btn">
+            <img class="delete_img" src="/images/delete.png" alt="">
+        </div>
+    </li>
     `
     // 加到最愛後清空輸入欄
     searchInput.value = '';
