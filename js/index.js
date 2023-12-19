@@ -5,7 +5,7 @@ let marker;
 let directionsService;
 let directionsRenderer;
 let infoWindow;
-
+let isDelete = false;
 const mapContainer = document.querySelector('.map');
 const searchInput = document.querySelector('.search_input');
 const btn = document.querySelector('.btn');
@@ -15,7 +15,6 @@ const restaurantList = document.querySelector('.restaurant_list');
 const alertBox = document.querySelector('.alert_box');
 const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)'];
 
-let isDelete = false;
 
 
 
@@ -27,10 +26,7 @@ restaurantListData.forEach((restaurant) => {
     restaurantList.innerHTML +=
     `
         <li onclick="deleteConfirmAlert(this)" class="delete_li">
-            <span style="font-size: 14px;">店名: </span> 
-            <span class="add_bottomline">${restaurant.name}</span>
-            <span style="font-size: 14px;">地址: </span>
-            <span class="add_bottomline">${restaurant.address}</span>
+            <span style="font-size: 14px;">店名: </span><span class="add_bottomline">${restaurant.name}</span><span style="font-size: 14px;">地址: </span><span class="add_bottomline">${restaurant.address}</span>
             <div class="delete_btn">
                 <img class="delete_img" src="/images/delete.png" alt="">
             </div>
@@ -42,11 +38,8 @@ restaurantListData.forEach((restaurant) => {
 addBtn.addEventListener('click',() => {
     restaurantList.innerHTML += 
     `
-    <li onclick="handleDelete(this)" class="delete_li">
-        <span style="font-size: 14px;">店名: </span> 
-        <span class="add_bottomline">${selectedRestaurant.name}</span>
-        <span style="font-size: 14px;">地址: </span>
-        <span class="add_bottomline">${selectedRestaurant.address}</span>
+    <li onclick="deleteConfirmAlert(this)" class="delete_li">
+        <span style="font-size: 14px;">店名: </span><span class="add_bottomline">${selectedRestaurant.name}</span><span style="font-size: 14px;">地址: </span><span class="add_bottomline">${selectedRestaurant.address}</span>
         <div class="delete_btn">
             <img class="delete_img" src="/images/delete.png" alt="">
         </div>
@@ -81,14 +74,15 @@ const handleDelete = (e) => {
         wheel.deleteSegment(index + 1);
         wheel.draw();
         const newRestaurantListData = restaurantListData.filter((restaurant) => {
-            if("店名:\n"+restaurant.name+"\n地址:\n"+ restaurant.address === restaurantName){
+            // console.log("店名: "+restaurant.name+"地址: "+ restaurant.address);
+            if("店名: "+restaurant.name+"地址: "+ restaurant.address === restaurantName){
                 return false;
             }else{
                 return true;
             }
         })
         // console.log(isDelete);
-        localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
+        // localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
         isDelete = false;
 }
 
@@ -300,12 +294,14 @@ const wheel = new Winwheel({
     }
 })
 
-document.querySelector('.draw').addEventListener('click',() => {
-    const canvas = document.getElementById('canvas');
-    document.querySelector('.wheel').style.display = 'block';
-    canvas.style.display = 'block';
-    wheel.startAnimation();
-})
+if(wheel.segments.length > 1){
+    document.querySelector('.draw').addEventListener('click',() => {
+        const canvas = document.getElementById('canvas');
+        document.querySelector('.wheel').style.display = 'block';
+        canvas.style.display = 'block';
+        wheel.startAnimation();
+    })
+}
 
 
 // 跳轉登入頁
