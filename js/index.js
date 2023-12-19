@@ -5,7 +5,7 @@ let marker;
 let directionsService;
 let directionsRenderer;
 let infoWindow;
-let isDelete = fasle;
+
 const mapContainer = document.querySelector('.map');
 const searchInput = document.querySelector('.search_input');
 const btn = document.querySelector('.btn');
@@ -15,6 +15,10 @@ const restaurantList = document.querySelector('.restaurant_list');
 const alertBox = document.querySelector('.alert_box');
 const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)'];
 
+let isDelete = false;
+
+
+
 
 
 // restaurantList init
@@ -22,7 +26,7 @@ const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')
 restaurantListData.forEach((restaurant) => {
     restaurantList.innerHTML +=
     `
-        <li onclick="handleDelete(this)" class="delete_li">
+        <li onclick="deleteConfirmAlert(this)" class="delete_li">
             <span style="font-size: 14px;">店名: </span> 
             <span class="add_bottomline">${restaurant.name}</span>
             <span style="font-size: 14px;">地址: </span>
@@ -64,8 +68,8 @@ addBtn.addEventListener('click',() => {
 })
 // 刪除選定的餐廳
 const handleDelete = (e) => {
-        if(e.children[0].classList.contains('add_bottomline')){
-            e.remove();
+        if(e.children[1].classList.contains('add_bottomline')){
+                e.remove();
         }
         const restaurantName = e.innerText.trim();
         // console.log(restaurantName);
@@ -83,13 +87,37 @@ const handleDelete = (e) => {
                 return true;
             }
         })
-        deleteConfirmAlert();
-        if(isDelete){
-            localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
-            isDelete = false;
-        }
-        
+        // console.log(isDelete);
+        localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
+        isDelete = false;
 }
+
+// 確認刪除 Alert
+const deleteConfirmAlert = (e) => {
+    alertBox.style.display = 'flex';
+    alertBox.innerHTML = `
+            <div class="tips">溫馨提示</div>
+            <div class="alert_txt">
+                確定刪除 ?
+            </div>
+            <div style="display:flex;">
+                <div class="alert_box_btn confirmBtn">確定</div>
+                <div class="alert_box_btn" onclick="closeAlert()" style="background:#c3002f">取消</div>
+            </div>
+            `;
+    const confirmBtn = document.querySelector('.confirmBtn');
+    confirmBtn.addEventListener('click',() => {
+        alertBox.style.display = 'none';
+        isDelete = true;
+        handleDelete(e);
+    })
+}
+
+const deleteConfirm = () => {
+    alertBox.style.display = 'none';
+    isDelete = true;
+}
+
 
 
 function initMap(){
@@ -292,22 +320,3 @@ const closeAlert = () => {
     alertBox.style.display = 'none';
 }
 
-// 確認刪除 Alert
-const deleteConfirmAlert = () => {
-    alertBox.style.display = 'flex';
-    alertBox.innerHTML = `
-            <div class="tips">溫馨提示</div>
-            <div class="alert_txt">
-                確定刪除 ?
-            </div>
-            <div style="display:flex;">
-                <div class="alert_box_btn" onclick="deleteConfirm()">確定</div>
-                <div class="alert_box_btn" onclick="closeAlert()" style="background:#c3002f">取消</div>
-            </div>
-            `;
-}
-
-const deleteConfirm = () => {
-    alertBox.style.display = 'none';
-    isDelete = true;
-}
