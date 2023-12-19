@@ -5,6 +5,7 @@ let marker;
 let directionsService;
 let directionsRenderer;
 let infoWindow;
+let isDelete = fasle;
 const mapContainer = document.querySelector('.map');
 const searchInput = document.querySelector('.search_input');
 const btn = document.querySelector('.btn');
@@ -67,7 +68,7 @@ const handleDelete = (e) => {
             e.remove();
         }
         const restaurantName = e.innerText.trim();
-        console.log(restaurantName);
+        // console.log(restaurantName);
 
         const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
         const index = restaurantListData.findIndex((restaurant) => {
@@ -76,13 +77,18 @@ const handleDelete = (e) => {
         wheel.deleteSegment(index + 1);
         wheel.draw();
         const newRestaurantListData = restaurantListData.filter((restaurant) => {
-            if("店名: "+restaurant.name+"地址: "+ restaurant.address === restaurantName){
+            if("店名:\n"+restaurant.name+"\n地址:\n"+ restaurant.address === restaurantName){
                 return false;
             }else{
                 return true;
             }
         })
-        localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
+        deleteConfirmAlert();
+        if(isDelete){
+            localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
+            isDelete = false;
+        }
+        
 }
 
 
@@ -284,4 +290,24 @@ const jumpLoginPage = () => {
 // 關閉 Alert
 const closeAlert = () => {
     alertBox.style.display = 'none';
+}
+
+// 確認刪除 Alert
+const deleteConfirmAlert = () => {
+    alertBox.style.display = 'flex';
+    alertBox.innerHTML = `
+            <div class="tips">溫馨提示</div>
+            <div class="alert_txt">
+                確定刪除 ?
+            </div>
+            <div style="display:flex;">
+                <div class="alert_box_btn" onclick="deleteConfirm()">確定</div>
+                <div class="alert_box_btn" onclick="closeAlert()" style="background:#c3002f">取消</div>
+            </div>
+            `;
+}
+
+const deleteConfirm = () => {
+    alertBox.style.display = 'none';
+    isDelete = true;
 }
