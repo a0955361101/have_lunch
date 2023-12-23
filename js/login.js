@@ -8,6 +8,7 @@ const registerBtn = document.querySelector('.register_btn');
 const loginBtn = document.querySelector('.login_btn');
 const nameBox = document.querySelector('.name');
 const title = document.querySelector('.title');
+const alertBox = document.querySelector('.alert_box');
 let page = 0; // 預設 0 登入頁 1註冊頁
 let pageTitle = 'Login';
 
@@ -88,24 +89,67 @@ const changeRegister = (number) => {
     title.innerHTML = pageTitle;
 }
 
-const SERVER = 'http://localhost:8080';
-const registerApi = `${SERVER}/signup`;
 
+const SERVER = 'http://localhost:3000';
+const registerApi = `${SERVER}/posts`;
+const jumpHmoePage = (uid) => {
+    const url = window.location.origin;
+    window.location.href = url;
+    // console.log(url);
+    // console.log(uid);
+    const user_id = {
+        id: uid,
+    }
+    localStorage.setItem('uid',JSON.stringify(user_id)); 
+}
 
 const handleUser = async () => {
-    const data = {
-        username:userNameInput.value,
-        password:userPasswordInput .value,
-        name:nameInput.value,
+    // 註冊
+    if(title.innerHTML === 'Register'){
+        const data = {
+            user_account:userNameInput.value,
+            password:userPasswordInput .value,
+            user_name:nameInput.value,
+        }
+        JSON.stringify(data);
+        await axios.post(registerApi, data, {})
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        userNameInput.value = '';
+        userPasswordInput .value = '';
+        nameInput.value = '';
     }
-    await axios.post(registerApi, data, {})
-    .then(function (response) {
-        console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-    userNameInput.value = '';
-    userPasswordInput .value = '';
-    nameInput.value = '';
+    // 登入
+    else if(title.innerHTML === 'Login'){
+        const data = {
+            user_account:userNameInput.value,
+            password:userPasswordInput .value,
+        }
+        JSON.stringify(data);
+        await axios.get(registerApi)
+        .then(function (response) {
+            const loginUser = response.data.filter((v) => {
+                    return v.user_account === data.user_account && v.password === data.password
+            })
+            // 跳轉首頁
+            if(loginUser.length > 0){
+                alertBox.style.display = 'flex';
+                alertBox.innerHTML = `
+                <div class="tips">溫馨提示</div>
+                <div class="alert_txt">
+                    登入成功
+                </div>
+                <div class="alert_box_btn" onclick="jumpHmoePage(${loginUser[0].id})">確定</div>
+                `;
+            }
+            // console.log(loginUser);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
 }

@@ -11,8 +11,11 @@
     <div class="header">
         <div class="navbar">
             <div class="logo">食莱運轉</div>
-            <div onclick="jumpLoginPage()" class="btn">
+            <div onclick="jumpLoginPage()" class="btn login_btn">
                 <img src="/images/uesr.png" alt="">
+            </div>
+            <div onclick="handleLogout()" class="btn logout_btn">
+                登出
             </div>
         </div>
     </div>
@@ -53,6 +56,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
     <script src="/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/json-server@0.17.4/lib/server/body-parser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=key&libraries=places&callback=initMap&region=TW&language=zh-TW"></script>
     <!-- 
     region 設定地區

@@ -13,16 +13,28 @@ const addBtn = document.querySelector('.addBtn');
 const deleteBtn = document.querySelector('.delete_btn');
 const restaurantList = document.querySelector('.restaurant_list');
 const alertBox = document.querySelector('.alert_box');
+const loginBtn = document.querySelector('.login_btn');
+const logoutBtn = document.querySelector('.logout_btn');
 const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)'];
-
-
+const uid = JSON.parse(localStorage.getItem('uid')) || [];
+let user_restaurantListData = {};
 
 
 
 
 // restaurantList init
-const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
-restaurantListData.forEach((restaurant) => {
+let restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
+// console.log(uid);
+if(uid.id){
+    logoutBtn.style.display = 'flex';
+    loginBtn.style.display = 'none';
+    user_restaurantListData = restaurantListData.filter((v) => {
+        // console.log('v.id:',v.id," uid: ",uid);
+        return v.id === uid.id;
+    })
+
+    // console.log("uid",user_restaurantListData);
+    user_restaurantListData.forEach((restaurant) => {
     restaurantList.innerHTML +=
     `
         <li onclick="deleteConfirmAlert(this)" class="delete_li">
@@ -32,7 +44,28 @@ restaurantListData.forEach((restaurant) => {
             </div>
         </li>
     `
-})
+    })
+}
+else{
+    let changeRestaurantListData = restaurantListData.filter((v) => {
+        return !v.id;
+    })
+    restaurantListData = changeRestaurantListData;
+    restaurantListData.forEach((restaurant) => {
+    restaurantList.innerHTML +=
+    `
+        <li onclick="deleteConfirmAlert(this)" class="delete_li">
+            <span style="font-size: 14px;">店名: </span><span class="add_bottomline">${restaurant.name}</span><span style="font-size: 14px;">地址: </span><span class="add_bottomline">${restaurant.address}</span>
+            <div class="delete_btn">
+                <img class="delete_img" src="/images/delete.png" alt="">
+            </div>
+        </li>
+    `
+    })
+}
+
+
+
 
 // 加入餐廳到最愛
 addBtn.addEventListener('click',() => {
@@ -55,7 +88,13 @@ addBtn.addEventListener('click',() => {
         text:selectedRestaurant.name,
         strokeStyle:'white'
     })
+    if(uid.id){
+        selectedRestaurant = {...selectedRestaurant,...uid};
+        // console.log(selectedRestaurant);
+    }
     wheel.draw();
+    
+    // console.log(selectedRestaurant);
     restaurantListData.push(selectedRestaurant);
     localStorage.setItem('restaurantListData',JSON.stringify(restaurantListData));
 })
@@ -207,15 +246,16 @@ function initMap(){
         })
     })
 }
-
+const wheelData = uid.id ? user_restaurantListData : restaurantListData;
 const wheel = new Winwheel({
-    numSegments:restaurantListData.length,
-    segments:restaurantListData.map((restaurant,index) => {
-        return {
-            fillStyle:colors[index % 4],
-            text:restaurant.name,
-            strokeStyle:'white',
-        }
+    numSegments:wheelData.length,
+    segments:wheelData.map((restaurant,index) => {
+            // console.log(restaurant);
+            return {
+                fillStyle:colors[index % 4],
+                text:restaurant.name,
+                strokeStyle:'white',
+            }
     }),
     pins:true,
     animation:{
@@ -309,6 +349,28 @@ const jumpLoginPage = () => {
     const url = window.location.origin;
     window.location.href = url + '/pages/login.html';
     // console.log(url);
+}
+
+// 登出
+const handleLogout = async () => {
+    localStorage.removeItem('uid');
+    const userListApi = 'http://localhost:3000/posts';
+    await axios.get(userListApi)
+    .then(function (response) {
+        const userDbId = restaurantListData.filter((v) => {
+            return v.id !== response.data.id;
+        })
+        restaurantListData = userDbId;
+        localStorage.setItem('restaurantListData',JSON.stringify(restaurantListData));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    
+    // localStorage 全部清除
+    // localStorage.clear()
+    const url = window.location.origin;
+    window.location.href = url;
 }
 
 // 關閉 Alert
