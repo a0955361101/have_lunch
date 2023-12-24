@@ -145,6 +145,15 @@ const handleUser = async () => {
                 </div>
                 <div class="alert_box_btn" onclick="jumpHmoePage(${loginUser[0].id})">確定</div>
                 `;
+            }else{
+                alertBox.style.display = 'flex';
+                alertBox.innerHTML = `
+                <div class="tips">溫馨提示</div>
+                <div class="alert_txt">
+                    帳號密碼輸入錯誤
+                </div>
+                <div class="alert_box_btn" onclick="alertBox.style.display = 'none'">確定</div>
+                `;
             }
             // console.log(loginUser);
         })

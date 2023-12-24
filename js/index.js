@@ -15,7 +15,7 @@ const restaurantList = document.querySelector('.restaurant_list');
 const alertBox = document.querySelector('.alert_box');
 const loginBtn = document.querySelector('.login_btn');
 const logoutBtn = document.querySelector('.logout_btn');
-const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)'];
+const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f'];
 const uid = JSON.parse(localStorage.getItem('uid')) || [];
 let user_restaurantListData = {};
 
@@ -121,7 +121,7 @@ const handleDelete = (e) => {
             }
         })
         // console.log(isDelete);
-        // localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
+        localStorage.setItem('restaurantListData',JSON.stringify(newRestaurantListData)); 
         isDelete = false;
 }
 
@@ -334,14 +334,24 @@ const wheel = new Winwheel({
     }
 })
 
-if(wheel.segments.length > 1){
-    document.querySelector('.draw').addEventListener('click',() => {
-        const canvas = document.getElementById('canvas');
-        document.querySelector('.wheel').style.display = 'block';
-        canvas.style.display = 'block';
-        wheel.startAnimation();
+document.querySelector('.draw').addEventListener('click',() => {
+        if(wheel.segments.length >= 3){
+            const canvas = document.getElementById('canvas');
+            document.querySelector('.wheel').style.display = 'block';
+            canvas.style.display = 'block';
+            wheel.startAnimation();
+        }
+        else{
+            alertBox.style.display = 'flex';
+            alertBox.innerHTML = `
+            <div class="tips">溫馨提示</div>
+            <div class="alert_txt">
+                請至少加入兩家餐廳哦哦哦哦 &hearts;
+            </div>
+            <div class="alert_box_btn" onclick="closeAlert()">確定</div>
+            `;
+        }
     })
-}
 
 
 // 跳轉登入頁

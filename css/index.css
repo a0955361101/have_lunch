@@ -7,6 +7,14 @@ body{
     position: relative;
 }
 
+.bg{
+    position: absolute;
+    z-index: -1;
+    height: 90vh;
+    width: 100%; 
+    opacity: .3;
+}
+
 .container{
     display: flex;
     padding: 0 10%;
@@ -27,7 +35,7 @@ body{
     width: 600px;
     border: 2px solid #ffffff;
     outline: none;
-    border-radius: 2px 2px 0 2px;
+    border-radius: 6px 0 0 6px;
     box-shadow: 1px 1px 10px 1px #00000026;
 }
 
@@ -36,7 +44,7 @@ body{
     width: 50%;
     background-color: #eee;
     box-shadow: 3px 3px 3px 0px rgb(0, 0, 0, 0.1);
-
+    border-radius: 6px;
 }
 
 .btn{
@@ -99,6 +107,7 @@ body{
     background: linear-gradient(rgb(20, 30, 48), rgb(36, 59, 85)) no-repeat;
     color: #fff;
     margin-bottom: 12px;
+    border-radius: 6px 6px 0 0;
 }
 
 .delete_img{
@@ -216,4 +225,8 @@ body{
 
 .confirmBtn{
     margin-right: 24px;
+}
+
+.restaurant_list_wrap{
+    min-height: 85%;
 }
