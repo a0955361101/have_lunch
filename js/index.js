@@ -12,12 +12,18 @@ const btn = document.querySelector('.btn');
 const addBtn = document.querySelector('.addBtn');
 const deleteBtn = document.querySelector('.delete_btn');
 const restaurantList = document.querySelector('.restaurant_list');
+const record_list = document.querySelector('.record_list');
+const recordListWrap = document.querySelector('.record_list_wrap');
+const restaurantListWrap = document.querySelector('.restaurant_list_wrap');
+const drawWrap = document.querySelector('.draw_wrap');
+const menu_1 = document.querySelector('.menu_1');
+const menu_2 = document.querySelector('.menu_2');
 const alertBox = document.querySelector('.alert_box');
 const loginBtn = document.querySelector('.login_btn');
 const logoutBtn = document.querySelector('.logout_btn');
 const alertBg = document.querySelector('.alert_bg');
 const body = document.querySelector('body');
-const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f'];
+const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f','rgb(185, 174, 76)','rgb(163, 76, 185)'];
 const uid = JSON.parse(localStorage.getItem('uid')) || [];
 let user_restaurantListData = {};
 
@@ -65,6 +71,52 @@ if(uid.id){
     })
 }
 
+// 切換列表
+const changeList = (number) => {
+    if(number === 1){
+        restaurantListWrap.style.display = 'none';
+        recordListWrap.style.display = 'block';
+        drawWrap.style.display = 'none';
+        record_list.innerHTML = '';
+        let recordData = JSON.parse(localStorage.getItem('record')) || [];
+        if(uid.id){
+            const userRecordData = recordData.filter((v) => {
+                return v.uid === uid.id;
+            })
+            // console.log(recordData);
+            if(recordData.length > 7){
+                userRecordData.shift();
+                recordData = userRecordData;
+                localStorage.setItem('record',JSON.stringify(recordData));
+                // console.log(recordData);
+                for(let i = 0;i < recordData.length;i++){
+                    record_list.innerHTML += `
+                    <li class="record_li">${i+1}. 
+                        <span class="record_add_bottomline">店名: ${recordData[i].record}</span>
+                        <span class="record_add_bottomline">時間: ${recordData[i].time}</span>
+                    </li>
+                    `;
+                }
+            }else{
+                recordData = userRecordData;
+                for(let i = 0;i < recordData.length;i++){
+                    record_list.innerHTML += `
+                    <li class="record_li">${i+1}. 
+                        <span class="record_add_bottomline">店名: ${recordData[i].record}</span>
+                        <span class="record_add_bottomline">時間: ${recordData[i].time}</span>
+                    </li>
+                    `;
+                }
+            }
+            
+        }
+    }else if(number === 2){
+        recordListWrap.style.display = 'none';
+        drawWrap.style.display = 'flex';
+        restaurantListWrap.style.display = 'block';
+    }
+}
+
 // 加入餐廳到最愛
 addBtn.addEventListener('click',() => {
     restaurantList.innerHTML += 
@@ -80,7 +132,7 @@ addBtn.addEventListener('click',() => {
     searchInput.value = '';
 
     const restaurantListData = JSON.parse(localStorage.getItem('restaurantListData')) || [];
-    const color = colors[restaurantListData.length % 4];
+    const color = colors[restaurantListData.length % 5];
     wheel.addSegment({
         fillStyle:color,
         text:selectedRestaurant.name,
@@ -282,6 +334,23 @@ const wheel = new Winwheel({
             </div>
             <div class="alert_box_btn" onclick="closeAlert()">確定</div>
             `;
+            if(uid.id){
+                const time = new Date();
+                const year = time.getFullYear();
+                const month = time.getMonth() + 1;
+                const date = time.getDate();
+                const hour = time.getHours();
+                const minute = time.getMinutes() < 10 ? '0'+ time.getMinutes() : time.getMinutes();
+                // console.log(minute);
+                const userRecordData = JSON.parse(localStorage.getItem('record')) || [];
+                const user_record = {
+                    record:segment.text,
+                    uid:uid.id,
+                    time:`${year}/${month}/${date} - ${hour}:${minute}`
+                }
+                userRecordData.push(user_record);
+                localStorage.setItem('record',JSON.stringify(userRecordData)); 
+            }
             const restaurantList = JSON.parse(localStorage.getItem('restaurantListData')) || []
             selectedRestaurant = restaurantList.find((restaurant) => {
                 return restaurant.name === segment.text
@@ -360,7 +429,6 @@ document.querySelector('.draw').addEventListener('click',() => {
             `;
         }
     })
-
 
 // 跳轉登入頁
 const jumpLoginPage = () => {

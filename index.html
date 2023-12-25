@@ -10,7 +10,13 @@
 <body>
     <div class="header">
         <div class="navbar">
-            <div class="logo">食莱運轉</div>
+            <div class="menu">
+                <div class="logo">食莱運轉</div>
+                <div class="menu">
+                    <div class="menu_1" onclick="changeList(2)">最愛</div>
+                    <div class="menu_2" onclick="changeList(1)">紀錄</div>
+                </div>
+            </div>
             <div onclick="jumpLoginPage()" class="btn login_btn">
                 <img src="/images/uesr.png" alt="">
             </div>
@@ -27,10 +33,16 @@
     <div class="container">
         <div class="map"></div>
         <div class="rigth_wrap">
-            <div class="restaurant_list_wrap">
+            <div class="restaurant_list_wrap" >
                 <div class="my_favourite">&hearts; 我的最愛</div>
                 <ul class="restaurant_list">
-
+                    
+                </ul>
+            </div>
+            <div class="record_list_wrap" >
+                <div class="my_favourite">&hearts; 歷史紀錄</div>
+                <ul class="record_list">
+                    
                 </ul>
             </div>
             <div class="draw_wrap">

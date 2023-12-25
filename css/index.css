@@ -95,6 +95,17 @@ body{
     justify-content: space-between;
 }
 
+.record_li{
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    justify-content: space-between;
+}
+
+.record_li:hover{
+    background-color: #bbb;
+}
+
 .delete_li:hover{
     background-color: #bbb;
 }
@@ -186,6 +197,15 @@ body{
     min-height: 24px;
 }
 
+.record_add_bottomline{
+    border-bottom: 1px solid #333;
+    margin-right: 6px;
+    width: 100%;
+    font-size: 14px;
+    padding: 12px 0 0px 0;
+    min-height: 24px;
+}
+
 .alert_box{
     width: 400px;
     height: 200px;
@@ -219,6 +239,7 @@ body{
     font-size: 24px;
     color: rgb(66 184 131 / 1);
     font-weight: bolder;
+    margin-right: 50px;
 }
 
 .confirmBtn{
@@ -238,3 +259,36 @@ body{
     top: 0;
     display: none;
 }
+
+.record_list_wrap{
+    display: none;
+    min-height: 85%;
+}
+
+.record_list{
+    width: 100%;
+}
+
+.menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu_1{
+    margin-right: 24px;
+    cursor: pointer;
+}
+
+.menu_2{
+    cursor: pointer;
+}
+
+.menu_1:hover{
+    color: rgb(66 184 131 / 1);
+}
+
+.menu_2:hover{
+    color: rgb(66 184 131 / 1);
+}
+
