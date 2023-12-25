@@ -12,7 +12,7 @@ body{
     z-index: -1;
     height: 90vh;
     width: 100%; 
-    opacity: .3;
+    opacity: .2;
 }
 
 .container{
@@ -121,9 +121,7 @@ body{
 
 .draw{
     width: 240px;
-    margin: 20px 0;
 }
-
 
 .wheel{
     position: fixed;
@@ -229,4 +227,14 @@ body{
 
 .restaurant_list_wrap{
     min-height: 85%;
+}
+
+.alert_bg{
+    background-color: #333;
+    opacity: .7;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
 }

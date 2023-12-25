@@ -9,6 +9,10 @@ const loginBtn = document.querySelector('.login_btn');
 const nameBox = document.querySelector('.name');
 const title = document.querySelector('.title');
 const alertBox = document.querySelector('.alert_box');
+const alertBg = document.querySelector('.alert_bg');
+const body = document.querySelector('body');
+const SERVER = 'http://localhost:3000';
+const registerApi = `${SERVER}/posts`;
 let page = 0; // 預設 0 登入頁 1註冊頁
 let pageTitle = 'Login';
 
@@ -89,9 +93,13 @@ const changeRegister = (number) => {
     title.innerHTML = pageTitle;
 }
 
+// 關閉 Alert
+const closeAlert = () => {
+    alertBox.style.display = 'none';
+    alertBg.style.display = 'none';
+    body.style.overflowY = 'auto';
+}
 
-const SERVER = 'http://localhost:3000';
-const registerApi = `${SERVER}/posts`;
 const jumpHmoePage = (uid) => {
     const url = window.location.origin;
     window.location.href = url;
@@ -103,26 +111,61 @@ const jumpHmoePage = (uid) => {
     localStorage.setItem('uid',JSON.stringify(user_id)); 
 }
 
+const handelRegister = async(user_account,password,user_name) => {
+    const data = {
+        user_account:user_account,
+        password:password,
+        user_name:user_name,
+    }
+
+    JSON.stringify(data);
+
+    await axios.post(registerApi, data, {})
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    userNameInput.value = '';
+    userPasswordInput .value = '';
+    nameInput.value = '';
+}
+
 const handleUser = async () => {
     // 註冊
-    if(title.innerHTML === 'Register'){
-        const data = {
-            user_account:userNameInput.value,
-            password:userPasswordInput .value,
-            user_name:nameInput.value,
-        }
-        JSON.stringify(data);
-        await axios.post(registerApi, data, {})
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        userNameInput.value = '';
-        userPasswordInput .value = '';
-        nameInput.value = '';
+    const data = {
+        user_account:userNameInput.value,
+        password:userPasswordInput.value,
+        user_name:nameInput.value,
     }
+
+    if(title.innerHTML === 'Register'){
+        if(data.user_account.length < 5 || data.password.length < 5 ){
+            alertBox.style.display = 'flex';
+            alertBg.style.display = 'block';
+            body.style.overflowY = 'hidden';
+            alertBox.innerHTML = `
+                <div class="tips">溫馨提示</div>
+                <div class="alert_txt">
+                    帳號與密碼長度需大於5位
+                </div>
+                <div class="alert_box_btn" onclick="closeAlert()">確定</div>
+                `;
+        }else{
+            alertBox.style.display = 'flex';
+            alertBg.style.display = 'block';
+            body.style.overflowY = 'hidden';
+            alertBox.innerHTML = `
+                <div class="tips">溫馨提示</div>
+                <div class="alert_txt">
+                    註冊成功
+                </div>
+                <div class="alert_box_btn" onclick="handelRegister(userNameInput.value,userPasswordInput.value,nameInput.value)">確定</div>
+                `;
+        }
+    }
+
     // 登入
     else if(title.innerHTML === 'Login'){
         const data = {
@@ -138,6 +181,8 @@ const handleUser = async () => {
             // 跳轉首頁
             if(loginUser.length > 0){
                 alertBox.style.display = 'flex';
+                alertBg.style.display = 'block';
+                body.style.overflowY = 'hidden';
                 alertBox.innerHTML = `
                 <div class="tips">溫馨提示</div>
                 <div class="alert_txt">
@@ -147,12 +192,14 @@ const handleUser = async () => {
                 `;
             }else{
                 alertBox.style.display = 'flex';
+                alertBg.style.display = 'block';
+                body.style.overflowY = 'hidden';
                 alertBox.innerHTML = `
                 <div class="tips">溫馨提示</div>
                 <div class="alert_txt">
                     帳號密碼輸入錯誤
                 </div>
-                <div class="alert_box_btn" onclick="alertBox.style.display = 'none'">確定</div>
+                <div class="alert_box_btn" onclick="closeAlert()">確定</div>
                 `;
             }
             // console.log(loginUser);

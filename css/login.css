@@ -102,8 +102,6 @@ label{
     border-radius: 5px;
 }
 
-
-
 .register_btn .boder_1{
     background: linear-gradient(90deg, transparent, rgb(97 218 251));
 }
@@ -145,7 +143,6 @@ label{
     width: 100%;
 }
 
-
 .boder_2{
     position: absolute;
     animation:boder2 1s linear infinite;
@@ -157,7 +154,6 @@ label{
     display: block;
 }
 
-
 .boder_3{
     display: block;
     animation:boder3 1s linear infinite;
@@ -168,8 +164,6 @@ label{
     bottom: 0;
     position: absolute;
 }
-
-
 
 .boder_4{
     display: block;
@@ -226,6 +220,16 @@ label{
     text-align: center;
     box-sizing: border-box;
     margin-bottom: 6px;
+}
+
+.alert_bg{
+    background-color: #333;
+    opacity: .7;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
 }
 
 @keyframes boder1 {

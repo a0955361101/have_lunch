@@ -15,6 +15,8 @@ const restaurantList = document.querySelector('.restaurant_list');
 const alertBox = document.querySelector('.alert_box');
 const loginBtn = document.querySelector('.login_btn');
 const logoutBtn = document.querySelector('.logout_btn');
+const alertBg = document.querySelector('.alert_bg');
+const body = document.querySelector('body');
 const colors = ['rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f','rgb(66 184 131 / 1)','rgb(97 218 251 / 1)','#c73f5f'];
 const uid = JSON.parse(localStorage.getItem('uid')) || [];
 let user_restaurantListData = {};
@@ -45,8 +47,7 @@ if(uid.id){
         </li>
     `
     })
-}
-else{
+}else{
     let changeRestaurantListData = restaurantListData.filter((v) => {
         return !v.id;
     })
@@ -63,9 +64,6 @@ else{
     `
     })
 }
-
-
-
 
 // 加入餐廳到最愛
 addBtn.addEventListener('click',() => {
@@ -98,6 +96,7 @@ addBtn.addEventListener('click',() => {
     restaurantListData.push(selectedRestaurant);
     localStorage.setItem('restaurantListData',JSON.stringify(restaurantListData));
 })
+
 // 刪除選定的餐廳
 const handleDelete = (e) => {
         if(e.children[1].classList.contains('add_bottomline')){
@@ -128,6 +127,8 @@ const handleDelete = (e) => {
 // 確認刪除 Alert
 const deleteConfirmAlert = (e) => {
     alertBox.style.display = 'flex';
+    alertBg.style.display = 'block';
+    body.style.overflowY = 'hidden';
     alertBox.innerHTML = `
             <div class="tips">溫馨提示</div>
             <div class="alert_txt">
@@ -141,6 +142,8 @@ const deleteConfirmAlert = (e) => {
     const confirmBtn = document.querySelector('.confirmBtn');
     confirmBtn.addEventListener('click',() => {
         alertBox.style.display = 'none';
+        alertBg.style.display = 'none';
+        body.style.overflowY = 'auto';
         isDelete = true;
         handleDelete(e);
     })
@@ -148,10 +151,10 @@ const deleteConfirmAlert = (e) => {
 
 const deleteConfirm = () => {
     alertBox.style.display = 'none';
+    alertBg.style.display = 'none';
+    body.style.overflowY = 'auto';
     isDelete = true;
 }
-
-
 
 function initMap(){
     map = new google.maps.Map(mapContainer,{
@@ -246,6 +249,7 @@ function initMap(){
         })
     })
 }
+
 const wheelData = uid.id ? user_restaurantListData : restaurantListData;
 const wheel = new Winwheel({
     numSegments:wheelData.length,
@@ -269,6 +273,8 @@ const wheel = new Winwheel({
             wheel.draw();
             // window.alert(segment.text);
             alertBox.style.display = 'flex';
+            alertBg.style.display = 'block';
+            body.style.overflowY = 'hidden';
             alertBox.innerHTML = `
             <div class="tips">溫馨提示</div>
             <div class="alert_txt">
@@ -343,6 +349,8 @@ document.querySelector('.draw').addEventListener('click',() => {
         }
         else{
             alertBox.style.display = 'flex';
+            alertBg.style.display = 'block';
+            body.style.overflowY = 'hidden';
             alertBox.innerHTML = `
             <div class="tips">溫馨提示</div>
             <div class="alert_txt">
@@ -386,5 +394,6 @@ const handleLogout = async () => {
 // 關閉 Alert
 const closeAlert = () => {
     alertBox.style.display = 'none';
+    alertBg.style.display = 'none';
+    body.style.overflowY = 'auto';
 }
-
