@@ -46,7 +46,7 @@ if(uid.id){
     restaurantList.innerHTML +=
     `
         <li onclick="deleteConfirmAlert(this)" class="delete_li">
-            <span style="font-size: 14px;">店名: </span><span class="add_bottomline">${restaurant.name}</span><span style="font-size: 14px;">地址: </span><span class="add_bottomline">${restaurant.address}</span>
+            <span style="font-size: 12px;">店名: </span><span class="add_bottomline">${restaurant.name}</span><span style="font-size: 12px;">地址: </span><span class="add_bottomline">${restaurant.address}</span>
             <div class="delete_btn">
                 <img class="delete_img" src="/images/delete.png" alt="">
             </div>
@@ -62,7 +62,7 @@ if(uid.id){
     restaurantList.innerHTML +=
     `
         <li onclick="deleteConfirmAlert(this)" class="delete_li">
-            <span style="font-size: 14px;">店名: </span><span class="add_bottomline">${restaurant.name}</span><span style="font-size: 14px;">地址: </span><span class="add_bottomline">${restaurant.address}</span>
+            <span style="font-size: 12px;">店名: </span><span class="add_bottomline">${restaurant.name}</span><span style="font-size: 12px;">地址: </span><span class="add_bottomline">${restaurant.address}</span>
             <div class="delete_btn">
                 <img class="delete_img" src="/images/delete.png" alt="">
             </div>
@@ -122,7 +122,7 @@ addBtn.addEventListener('click',() => {
     restaurantList.innerHTML += 
     `
     <li onclick="deleteConfirmAlert(this)" class="delete_li">
-        <span style="font-size: 14px;">店名: </span><span class="add_bottomline">${selectedRestaurant.name}</span><span style="font-size: 14px;">地址: </span><span class="add_bottomline">${selectedRestaurant.address}</span>
+        <span style="font-size: 12px;">店名: </span><span class="add_bottomline">${selectedRestaurant.name}</span><span style="font-size: 12px;">地址: </span><span class="add_bottomline">${selectedRestaurant.address}</span>
         <div class="delete_btn">
             <img class="delete_img" src="/images/delete.png" alt="">
         </div>
